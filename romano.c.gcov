@@ -1,0 +1,240 @@
+        -:    0:Source:romano.c
+        -:    0:Graph:romano.gcno
+        -:    0:Data:romano.gcda
+        -:    0:Runs:2
+        -:    0:Programs:1
+        -:    1:#include <stdio.h>
+        -:    2:#include <stdlib.h>
+        -:    3:#include <string.h>
+        -:    4://#include <romano.h>
+        -:    5://#include "gtest/gtest.h"
+        -:    6:
+        -:    7:int unidade (char*, int*);
+        -:    8:int dezena (char*, int*);
+        -:    9:int centena (char*, int*);
+        -:   10:int milhar (char*, int*);
+        -:   11:int conversor (char*);
+        -:   12:
+        -:   13://funçao que converte os números
+        2:   14:int conversor(char* romano){ 
+        -:   15:
+        -:   16:  int num, U, D, C, M, numero;
+        2:   17:  int idx = 0;
+        -:   18:
+        2:   19:  M = milhar(romano, &idx); //calcula o algorismo da casa de milhar
+        2:   20:  C = centena(romano, &idx);  //calcula o algorismo da casa de centena
+        2:   21:  D = dezena(romano, &idx); //calcula o algorismo da casa de dezena
+        2:   22:  U = unidade(romano, &idx);  //calcula o algorismo da casa da unidade
+        -:   23:  
+        2:   24:  num = M + C + D + U; //Soma e adquire o valor do numero
+        -:   25:
+        2:   26:  if(num == 0){ //Se não passar por nenhum identificador de algarismo romano será pq não existe letra válida
+        1:   27:    return -1;
+        -:   28:  }
+        -:   29:
+        1:   30:  numero = strlen(romano);
+        -:   31:
+        1:   32:  if(idx != numero){  //identifica se todos os valores foram varridos e se não é pq o número é inválido
+    #####:   33:    return -1;
+        -:   34:  }
+        -:   35:
+        1:   36:  return num;
+        -:   37:  
+        -:   38:}
+        -:   39:
+        -:   40://calcula o algorismo da casa da unidade
+        2:   41:int unidade (char* romano, int* idx){
+        -:   42:
+        2:   43:  int num = 0;
+        -:   44:
+        2:   45:  if(romano[(*idx)] == 'i' || romano[(*idx)] == 'I'){
+        1:   46:    num = 1;
+        1:   47:    (*idx) ++;
+        1:   48:    if(romano[(*idx)] == 'v' || romano[(*idx)] == 'V'){
+        1:   49:      num = 4;
+        1:   50:      (*idx) ++;
+        -:   51:    }
+        1:   52:    if(romano[(*idx)] == 'x' || romano[(*idx)] == 'X'){
+    #####:   53:      num = 9;
+    #####:   54:      (*idx) ++;
+        -:   55:    }
+        -:   56:
+        1:   57:    if(romano[(*idx)] == 'i' || romano[(*idx)] == 'I'){
+    #####:   58:      num = 2;
+    #####:   59:      (*idx) ++;
+    #####:   60:      if(romano[(*idx)] == 'i' || romano[(*idx)] == 'I'){
+    #####:   61:        num = 3;
+    #####:   62:        (*idx) ++;
+        -:   63:      }
+        -:   64:    }
+        -:   65:  }
+        -:   66:  
+        2:   67:  if(romano[(*idx)] == 'v' || romano[(*idx)] == 'V'){
+    #####:   68:    num = 5;
+    #####:   69:    (*idx) ++;
+    #####:   70:    if(romano[(*idx)] == 'i' || romano[(*idx)] == 'I'){
+    #####:   71:      num = 6;
+    #####:   72:      (*idx) ++;
+    #####:   73:      if(romano[(*idx)] == 'i' || romano[(*idx)] == 'I'){
+    #####:   74:        num = 7;
+    #####:   75:        (*idx) ++;
+    #####:   76:        if(romano[(*idx)] =='i' || romano[(*idx)] == 'I'){
+    #####:   77:          num = 8;
+    #####:   78:          (*idx) ++;
+        -:   79:        }
+        -:   80:      }
+        -:   81:    }
+        -:   82:  }
+        -:   83:
+        2:   84:  return num;
+        -:   85:}
+        -:   86:
+        -:   87://calcula o algorismo da casa de dezena
+        2:   88:int dezena(char* romano, int* idx){
+        -:   89:
+        2:   90:  int num = 0;
+        -:   91:
+        2:   92:  if(romano[(*idx)] == 'x' || romano[(*idx)] == 'X'){
+        1:   93:    num = 10;
+        1:   94:    (*idx) ++;
+        -:   95:
+        1:   96:    if(romano[(*idx)] == 'x' || romano[(*idx)] == 'X'){
+    #####:   97:      num = 20;
+    #####:   98:      (*idx) ++;
+    #####:   99:      if(romano[(*idx)] == 'x' || romano[(*idx)] == 'X'){
+    #####:  100:        num = 30;
+    #####:  101:        (*idx) ++;
+        -:  102:      }
+        -:  103:    }
+        -:  104:
+        1:  105:    if(romano[(*idx)] == 'l' || romano[(*idx)] == 'L'){
+    #####:  106:      num = 40;
+    #####:  107:      (*idx) ++;
+        -:  108:    }
+        -:  109:
+        1:  110:    if(romano[(*idx)] == 'c' || romano[(*idx)] == 'C'){
+    #####:  111:      num = 90;
+    #####:  112:      (*idx) ++;
+        -:  113:    }
+        -:  114:
+        -:  115:  }
+        -:  116:
+        2:  117:  if(romano[(*idx)] == 'l' || romano[(*idx)] == 'L'){
+    #####:  118:    num = 50;
+    #####:  119:    (*idx) ++;
+    #####:  120:    if(romano[(*idx)] == 'x' || romano[(*idx)] == 'X'){
+    #####:  121:      num = 60;
+    #####:  122:      (*idx) ++;
+    #####:  123:      if(romano[(*idx)] == 'x' || romano[(*idx)] == 'X'){
+    #####:  124:        num = 70;
+    #####:  125:        (*idx) ++;
+    #####:  126:        if(romano[(*idx)] == 'x' || romano[(*idx)] == 'X'){
+    #####:  127:          num = 80;
+    #####:  128:          (*idx) ++;
+        -:  129:        } 
+        -:  130:      }
+        -:  131:    } 
+        -:  132:  }
+        -:  133:
+        2:  134:  return num;
+        -:  135:}
+        -:  136:
+        -:  137://calcula o algorismo da casa da centena
+        2:  138:int centena (char* romano, int* idx){
+        -:  139:
+        2:  140:  int num = 0;
+        -:  141:
+        2:  142:  if(romano[(*idx)] == 'c' || romano[(*idx)] == 'C'){
+    #####:  143:    num = 100;
+    #####:  144:    (*idx) ++;
+    #####:  145:    if(romano[(*idx)] == 'c' || romano[(*idx)] == 'C'){
+    #####:  146:      num = 200;
+    #####:  147:      (*idx) ++;
+    #####:  148:      if(romano[(*idx)] == 'c' || romano[(*idx)] == 'C'){
+    #####:  149:        num = 300;
+    #####:  150:        (*idx) ++;
+        -:  151:      }
+        -:  152:    }
+    #####:  153:    if(romano[(*idx)] == 'd' || romano[(*idx)] == 'D'){
+    #####:  154:      num = 400;
+    #####:  155:      (*idx) ++;
+        -:  156:    }
+    #####:  157:    if(romano[(*idx)] == 'm' || romano[(*idx)] == 'M'){
+    #####:  158:      num = 900;
+    #####:  159:      (*idx) ++;
+        -:  160:    }
+        -:  161:  }
+        -:  162:
+        2:  163:  if(romano[(*idx)] == 'd' || romano[(*idx)] == 'D'){
+    #####:  164:    num = 500;
+    #####:  165:    (*idx) ++;
+    #####:  166:    if(romano[(*idx)] == 'c' || romano[(*idx)] == 'C'){
+    #####:  167:      num = 600;
+    #####:  168:      (*idx) ++;
+    #####:  169:      if(romano[(*idx)] == 'c' || romano[(*idx)] == 'C'){
+    #####:  170:        num = 700;
+    #####:  171:        (*idx) ++;
+    #####:  172:        if(romano[(*idx)] == 'c' || romano[(*idx)] == 'C'){
+    #####:  173:          num = 800;
+    #####:  174:          (*idx) ++;
+        -:  175:        }
+        -:  176:      }
+        -:  177:    }
+        -:  178:  }
+        -:  179:
+        2:  180:  return num;
+        -:  181:
+        -:  182:}
+        -:  183:
+        -:  184://calcula o algorismo da casa de milhar
+        2:  185:int milhar (char* romano, int* idx){
+        -:  186:
+        2:  187:  int num = 0;
+        -:  188:  
+        2:  189:  if(romano[(*idx)] == 'm' || romano[(*idx)] == 'M'){
+        1:  190:    num = 1000;
+        1:  191:    (*idx) ++;
+        1:  192:    if(romano[(*idx)] == 'm' || romano[(*idx)] == 'M'){
+    #####:  193:      num = 2000;
+    #####:  194:      (*idx) ++;
+    #####:  195:      if(romano[(*idx)] == 'm' || romano[(*idx)] == 'M'){
+    #####:  196:        num = 3000;
+    #####:  197:        (*idx) ++;
+        -:  198:      } 
+        -:  199:    }
+        -:  200:  }
+        -:  201:
+        2:  202:  return num;
+        -:  203:}
+        -:  204:
+        -:  205:/*EST(conversorTest, Existe){
+        -:  206:  EXPECT_EQ (1258, conversor("MCCLVIII"));
+        -:  207:  EXPECT_EQ (1250, conversor("MCCL"));
+        -:  208:  EXPECT_EQ (8, conversor("VIII"));
+        -:  209:  EXPECT_EQ (1001, conversor("MMI"));
+        -:  210:}
+        -:  211:
+        -:  212:TEST(conversorTest, NaoExiste){
+        -:  213:  ASSERT_EQ (-1, conversor("MIVV"));
+        -:  214:  ASSERT_EQ (-1, conversor(""));
+        -:  215:}*/
+        -:  216:
+        2:  217:int main(int argc, char **argv){
+        -:  218:
+        -:  219:  char romano[30];
+        -:  220:  int num;
+        -:  221:
+        2:  222:  system("clear");
+        -:  223:
+        2:  224:  printf("Digite o valor em algarismo romano: ");
+        2:  225:  scanf("%s", romano);
+        -:  226:
+        2:  227:  num = conversor(romano);
+        -:  228:
+        2:  229:  printf("\n%d\n", num);
+        -:  230:
+        -:  231:  //::testing::InitGoogleTest(&argc, argv);
+        -:  232:  //return RUN_ALL_TESTS();
+        -:  233:
+        2:  234:  return 0;
+        -:  235:}
