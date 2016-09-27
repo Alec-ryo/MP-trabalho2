@@ -8,3 +8,4 @@ int milhar (char*, int*);
 int conversor (char*);
 
 #endif  // GTEST_SAMPLES_SAMPLE1_H_
+
